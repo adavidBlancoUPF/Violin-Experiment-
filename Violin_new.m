@@ -84,6 +84,9 @@ KbPressWait;
 tStart = GetSecs;
 ClickTime = GetSecs;
 
+
+disp("Había que añadir esta linea y solo esta linea para funcionar");
+
 for iTrial=1:nTrials
     %Send Click
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately

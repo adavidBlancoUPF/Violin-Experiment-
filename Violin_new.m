@@ -8,14 +8,14 @@ image_path = 'Escalas\Escala';
 %%%%% Screen settings %%%%%
 backcolor = [255 255 255]; % color for display window background: black.
 textcolor = [0 0 0]; % color for text: white
-redcolor = [1 0 0];
+redcolor = [255 0 0];
 rect = [0 0 1400 700];
 textfontsize = 20;
 textfont = 'Arial';
 countdownfontsize = 50;
 
 screens = Screen('Screens');
-screenNumber = 1;
+screenNumber = 2;
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
 
@@ -42,12 +42,28 @@ paHandle = PsychPortAudio('Open'); % Open the Audio port and get a handle to ref
 buffer(1) = PsychPortAudio('Createbuffer',paHandle,click);
 PsychPortAudio('FillBuffer', paHandle,buffer(1)); % Fill the audio buffer with click
 
+if screenNumber == 1
+    %%% Drawing arrow and text settings in 16:9 screens
+    init_x_arr = 230;
+    first_x_arr = 340;
+    last_x_arr = 1120;
+    y_arr     = 300;
+    instructions_text = 700;
+    countdownText = 550;
+    countdownNumberText = 600;
+end
+if screenNumber == 2
+    %%% Drawing arrow and text settings in 4:3 screens
+    init_x_arr = 185;
+    first_x_arr = 305;
+    last_x_arr = 1075;
+    y_arr     = 430;
+    instructions_text = 1003;
+    countdownText = 788;
+    countdownNumberText = 860;
+end
 
-%%% Drawing arrow settings
-init_x_arr = 230;
-first_x_arr = 340;
-last_x_arr = 1120;
-y_arr     = 300;
+
 
 %%%%% Block settings %%%%%
 nTrials = 2;%8
@@ -62,6 +78,10 @@ Instruction4 = 'GO!';
 Instruction5 = 'End of Trial';
 Instruction6 = 'Stop!';
 Instruction7 = 'Get ready to play in:';
+
+%%% arrow points
+val_arrow = linspace(first_x_arr,last_x_arr, nNotes);
+val_arrow = [init_x_arr,val_arrow];
 
 
 %% Experiment Start
@@ -102,8 +122,7 @@ for iTrial=1:nTrials
     %DrawFormattedText(EXPWIN, instructions, 'center', 700,textcolor); % draw the question centered
     
     
-   val_arrow = linspace(first_x_arr,last_x_arr, nNotes);
-   val_arrow = [init_x_arr,val_arrow];
+   
     for sec=1:length(val_arrow)       
         % create a triangle
         head   = [ val_arrow(sec), y_arr ]; % coordinates of head
@@ -114,11 +133,11 @@ for iTrial=1:nTrials
         
         
         Screen('DrawTexture',EXPWIN,t_handle);
-        Screen('FillPoly', EXPWIN,[200,200,200], points);
-        DrawFormattedText(EXPWIN, instructions, 'center', 700,textcolor); % draw the question centered
+        Screen('FillPoly', EXPWIN,[200,0,0], points);
+        DrawFormattedText(EXPWIN, instructions, 'center', instructions_text,textcolor); % draw the question centered
         if sec > nCountdown
-            DrawFormattedText(EXPWIN, Instruction7, 'center', 550,textcolor);
-            DrawFormattedText(EXPWIN, num2str((nNotes+3)-sec), 'center', 600,redcolor);
+            DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
+            DrawFormattedText(EXPWIN, num2str((nNotes+3)-sec), 'center', countdownNumberText,redcolor);
         end
         Screen('Flip', EXPWIN);
         WaitSecs(1);
@@ -130,32 +149,32 @@ for iTrial=1:nTrials
     
     %ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     Screen('DrawTexture',EXPWIN,t_handle);
-    DrawFormattedText(EXPWIN, Instruction7, 'center', 550,textcolor);
-    DrawFormattedText(EXPWIN, num2str(1), 'center', 600,redcolor); % draw the question centered
+    DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
+    DrawFormattedText(EXPWIN, num2str(1), 'center', countdownNumberText,redcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
     WaitSecs(1);
     
     Screen('DrawTexture',EXPWIN,t_handle);
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
-    DrawFormattedText(EXPWIN, Instruction4, 'center', 600,textcolor); % draw the question centered
+    DrawFormattedText(EXPWIN, Instruction4, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
-    WaitSecs(8);
+    WaitSecs(nNotes);
     
     Screen('DrawTexture',EXPWIN,t_handle);
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
-    DrawFormattedText(EXPWIN, Instruction6, 'center', 600,textcolor); % draw the question centered
+    DrawFormattedText(EXPWIN, Instruction6, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
     WaitSecs(1);
       
     Screen('DrawTexture',EXPWIN,t_handle);
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
-    DrawFormattedText(EXPWIN, Instruction2, 'center', 600,textcolor); % draw the question centered
+    DrawFormattedText(EXPWIN, Instruction2, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
-    WaitSecs(8);
+    WaitSecs(nNotes);
     
     
 end

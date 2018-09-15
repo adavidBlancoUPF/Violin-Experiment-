@@ -84,9 +84,7 @@ KbPressWait;
 tStart = GetSecs;
 ClickTime = GetSecs;
 
-disp('Venga va los ultimos');
-
-disp('Había que añadir esta linea para que funcionase');
+disp("Había que añadir esta linea y solo esta linea para funcionar");
 
 for iTrial=1:nTrials
     %Send Click

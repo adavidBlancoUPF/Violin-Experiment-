@@ -84,7 +84,7 @@ KbPressWait;
 tStart = GetSecs;
 ClickTime = GetSecs;
 
-disp('Hey');
+disp('Holaaaaaa');
 
 for iTrial=1:nTrials
     %Send Click

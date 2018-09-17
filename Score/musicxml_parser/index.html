@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Supplementary Material for Nichols et al, ISMIR 2009</title>
+<link href="main.css" rel="stylesheet" type="text/css" />
+</head>
+<body bgcolor=#ffffff>
+<div class="maindiv">
+<center>
+<p class="title">Relationships Between Lyrics and Melody in Popular Music</p>
+<p class="subtitle">Supplementary material</p>
+</center>
+
+<br>
+<p>The material on this page accompanies the following paper:<br><br>
+<b>Relationships Between Lyrics and Melody in Popular Music</b><br>
+Nichols E, Morris D, Basu S, Raphael C<br>
+<i>To appear in the proceedings of the International Symposium on Music Information Retrieval (ISMIR) 2009</i><br><br>
+The paper is available <a href="ismir2009MelodyAndLyrics.pdf">here</a>.
+</p><br>
+
+<hr>
+<p class="heading">MusicXML parsing scripts</p>
+<hr>
+<br>
+
+<p>If you're viewing this README online, you can download an archive that includes the parsing code and this README from:</p>
+
+<p style="font-weight:bold;text-align:left;font-size:100%;margin-left:40px;margin-top:15px;margin-bottom:15px;"><a href="http://www.music.informatics.indiana.edu/code/musicxml/musicxml_parser.zip">http://www.music.informatics.indiana.edu/code/musicxml/musicxml_parser.zip</a></p>
+
+<p>This directory contains a series of Matlab scripts that parse a database of MusicXML files into a set of Matlab structures and a set of text files that are suitable for research and analysis and - hopefully - easy to work with.</p>
+
+<p>The goal of this package is to enable researchers to build interesting models of popular music by making it easier to explore the statistics of popular lead sheets.  Some users will want to work directly with the output structures, others might just use this as example/starter code for other parsing tasks.</p>
+
+
+<br>
+<hr>
+<p class="heading">Getting the Database</p>
+<hr>
+<br>
+
+<p>This package includes only a small sample data set of MusicXML data for public-domain songs.  This is just to demonstrate the package; it's not really enough to be useful for analysis.  The best way to get a large database of MusicXML data is to visit wikifonia.org.  You can get monthly dumps of the Wikifonia repository at:</p>
+
+<p style="font-weight:bold;text-align:left;margin-left:40px;font-size:100%;margin-top:15px;margin-bottom:15px;"><a href="http://www.wikifonia.org/developer">http://www.wikifonia.org/developer</a></p>
+
+<p>Alternatively, the following ISMIR paper from 2008 contains a very simple script (in Listing 1) for downloading the whole Wikifonia archive:</p>
+
+<p style='font-weight:bold;text-align:left;margin-left:40px;margin-top:15px;margin-bottom:15px;'><a href="http://ismir2008.ismir.net/papers/ISMIR2008_217.pdf">http://ismir2008.ismir.net/papers/ISMIR2008_217.pdf</a>
+
+<p>However you get the data, place all the MusicXML files you wish to analyze in a single directory.</p>
+
+
+
+<br>
+<hr>
+<p class="heading">Setup</p>
+<hr>
+<br>
+
+<p>The only thing you need to do before parsing the database is to point the script to your database.  You do this by simply opening process_xml_data.m and changing the very first statement:</p>
+
+<pre>DATAPATH = '../data/test';</pre>
+    
+<p>...so that it points to wherever your directory is.  Relative or absolute pathnames are fine. </p>
+
+
+<br>
+<hr>
+<p class="heading">Running the Parser</p>
+<hr>
+<br>
+
+<p>To parse all the MusicXML data you've provided, just start Matlab, cd into the directory where you've unzipped this package, cd into the &ldquo;music_code&rdquo; directory, and run &ldquo;process_xml_data.m&rdquo;.  You'll see a bunch of printouts about each song as it gets parsed.  The most common warning is &ldquo;could not find tempo information&rdquo;; this is no big deal, as most Wikifonia lead sheets do not provide specific tempo information.</p>
+
+<p>All of the information parsed from the MusicXML files will be written to a subdirectory called &ldquo;output&rdquo;.</p>
+
+<p>After running the main script, you'll see two files in the "output" directory: (1) musicxml.mat and (2) a directory called songdata.[date and time].</p>
+
+
+<br>
+<hr>
+<p class="heading">Matlab Output</p>
+<hr>
+<br>
+
+<p>The first file, musicxml.mat, contains a single Matlab structure array called all_songs.  Each element in this array corresponds to one parsed song.  The fields in this structure are defined as follows:</p>
+
+<pre>
+    'raw_notes' is a matrix of size n_notes x 4, with the four columns as follows:
+	%
+	%   [start] [end] [pitch] [octave]
+	%
+	%   start and end are in units of 'measure', so 0 is the beginning of the
+	%   first measure and 1 is the end of the first measure.
+	 
+	%   pitch is a pitch index (0 = c, 11 = b), and octave indicates the octave relative
+	%   to middle-c.
+</pre>
+
+<p>'raw_chords' has the same four columns, plus a fifth column indicating which triad this chord is based on (see define_music_globals.m).</p>
+
+
+<p>'raw_chord_names' is an n_notes x 1 cell array indicating the full name of each chord.</p>
+
+
+<p>'raw_merged_nmat' is a matrix in the same format as raw_notes, containing both the notes from the melody in the song and a simple block chord rendering of every chord in the song.  The nmat format is used by the MIDI toolbox, so it's easy to play this matrix back as a MIDI file to sanity check all the parsing.</p>
+
+
+<p>The 'transposed_notes', 'transposed_chords', 'transposed_chord_names', and 'transposed_merged_nmat' fields are exactly the same as the corresponding "raw" fields, except that they've been transposed into the key of C.  If a song contains key changes, each segment has been individually transposed into the key of C (so playing back one of the "transposed" matrices would sound funny if the song contains a key change, since relative keys are not preserved).</p>
+
+
+<p>The 'info' field has a bunch of other metadata, like time and key information.  It also contains an "error" field, which is >=0 if everything goes well, <0  to indicate en error, in which case the other fields will be empty.</p>
+
+
+<p>The 'lyrics' field is a struct array of lyric information, where each element is a struct corresponding to a syllable, with this format:</p>
+
+<pre>
+	% struct lyric {
+	%
+	%   % The text corresponding to this syllable
+	%   text;
+	%
+	%   % An indicator of where this syllable sits in a word, drawn from
+	%   % the SYLLABLE_* variables in define_music_globals.m, which correspond
+	%   % to the 'syllablic' fields in the MusicXML standard.
+	%   word_position;
+	%
+	%   % Which note in the 'notes' array does this syllable correspond to?
+	%   note_index;
+	%
+	%   % If there are multiple lyrics for this note (probably multiple
+	%   % verses), which one is this?
+	%   lyric_number;
+	% };
+</pre>
+	
+<p>The 'filename' field tells you the xml file that each element originated from.</p>
+
+
+<p>The 'title' field is the title of the song, as extracted from the MusicXML file.</p>
+
+
+<p>The 'tempo_bpm' field is the tempo of the song, which we've tried to extract from the MusicXML using several common conventions for tempo.  Note that many lead sheets do not specify their tempo.</p>
+
+
+<br>
+<hr>
+<p class="heading">Text Output</p>
+<hr>
+<br>
+
+<p>The timestamped directory created by the main script - called 'songdata.[datestamp]' - contains four text files for every parsed song: a lyrics file, a notes file, a chords file, and a measure-boundaries file, named as follows:</p>
+
+<pre>
+% nnn.lyrics.txt
+% nnn.chords.txt
+% nnn.notes.txt
+% nnn.measures.txt
+</pre>
+
+<p>Formats for these files are as follows:</p>
+
+<pre>
+% All three files contain #-delimited comments at the top of the file
+% indicating the title of the song and possibly other metadata.
+% 
+% The body of each file is a tab-delimited matrix, with fields in each row
+% as follows.
+%
+%%%
+% For the notes file:
+%%%
+%
+% Each row defines one note, according to:
+%
+% [start] [end] [pitch_class] [octave]
+% 
+%   start: the starting time for this note, in beats
+%   end: the ending time for this note, in beats
+%   pitch_class: the pitch class of this note, from 0 (C) --> 11 (B)
+%   octave: the octave in which this note should be played, relative to
+%     middle C
+%
+%%%
+% For the chords file:
+%%%
+%
+% Each row defines one chord, according to:
+%
+% [start] [end] [root] [octave] [triad] [name]
+% 
+%   start: the starting time for this chord, in beats
+%   end: the ending time for this chord, in beats
+%   root: the root note of this chord, from 0 (C) --> 11 (B)
+%   octave: the octave in which this chord should be played (not really
+%     meaningful) triad: the triad assigned to this chord from its type; 
+%     see the list of triads below
+%   name: the name of this chord, such as 'major' or 'suspended-fourth'
+%
+% Available triads:
+%
+% TRIAD_UNKNOWN = -1;
+% TRIAD_MAJOR = 0;
+% TRIAD_MINOR = 1;
+% TRIAD_DIMINISHED = 2;
+% TRIAD_AUGMENTED = 3;
+% TRIAD_SUSPENDED = 4;
+%
+%%%
+% For the lyrics file: 
+%%%
+%
+% Each row defines one syllable, according to:
+%
+% [note_index] [word_position] [lyric_number] [text] 
+%
+% note_index: an index into the 'notes' matrix for this song, indicating
+%   the note to which this syllabel correspods
+% word_position: an indicator of where this syllable falls in a word; see
+%   the SYLLABLE* enumeration below
+% lyric_number: If there are multiple lyrics for this note (probably
+%   multiple verses), which one is this?
+% text: the text corresponding to this syllabel
+%
+% SYLLABLE_SINGLESYLLABLE = 0;
+% SYLLABLE_WORDBEGIN = 1;
+% SYLLABLE_WORDCONTINUATION = 2;
+% SYLLABLE_WORDEND = 3;
+%
+%%%
+% For the measures file:
+%%%
+%
+% The body of each file is a tab-delimited matrix, with fields in each row
+% as follows, each row representing the start of a new measure:
+% 
+% [beat] [time sig numerator] [time sig denominator]
+%
+</pre>
+
+<br>
+<hr>
+<p class="heading">Dependencies</p>
+<hr>
+<br>
+
+<p>There are no dependencies other than Matlab and some data.  The scripts use the following downloaded components, all of which are included:</p>
+
+<p>Matlab XML Tools, by Peter Rydes&auml;ter<br>
+Downloaded from <a href="http://www.mathworks.com/matlabcentral/fileexchange/1742">http://www.mathworks.com/matlabcentral/fileexchange/1742</a></p>
+
+<p>Matlab MIDI toolbox, by Petri Toiviainen and Tuomas Eerola<br>
+Downloaded from <a href="http://www.jyu.fi/hum/laitokset/musiikki/en/research/coe/materials/miditoolbox/">http://www.jyu.fi/hum/laitokset/musiikki/en/research/coe/materials/miditoolbox/</a></p>
+
+</div>
+</body>
+</html>

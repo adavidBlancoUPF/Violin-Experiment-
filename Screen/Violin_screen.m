@@ -3,7 +3,7 @@ Screen('Preference', 'ConserveVRAM', 64)
 %% SETTINGS
 
 %%%%% Paths %%%%%
-image_path = 'Escalas\Escala';
+folder_path = '..\Score\New_generated_scores';
 
 %%%%% Screen settings %%%%%
 backcolor = [255 255 255]; % color for display window background: black.
@@ -104,14 +104,16 @@ KbPressWait;
 tStart = GetSecs;
 ClickTime = GetSecs;
 
-disp("Había que añadir esta linea y solo esta linea para funcionar");
+List = dir(fullfile(folder_path,'*.jpg'));
+Csv_list = csvread('file_example.csv');
+%list_index = newListOrder(List,Csv_list);
 
 for iTrial=1:nTrials
     %Send Click
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     
     % Show melody to be played
-    image_path = [num2str(iTrial) '.jpg'];
+    image_path = [folder_path,'\',List(Csv_list(iTrial,2)).name];
     pict = imread(image_path);
     pict = imresize(pict,0.5);
     t_handle = Screen('MakeTexture',EXPWIN,pict);

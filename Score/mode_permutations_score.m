@@ -34,7 +34,7 @@ for i=1:length(perms_array)
     %audiowrite([[folder_name,'\',name],'\',num2str(i),'_',name,'_',num2str(counter),'.wav'],signal, fs);
     score_ref.score_dash_partwise.part.measure = measure;
     
-    struct2xml(score_ref, [[folder_name,'\',name],'\',num2str(i),'_',name,'_',num2str(counter)])
+    struct2xml(score_ref, [folder_name,'\', num2str(counter,'%03.f'),'_',num2str(i),'_',name])
     counter = counter + 1;
 end
 

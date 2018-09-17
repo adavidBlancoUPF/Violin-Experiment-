@@ -1,5 +1,5 @@
 # Violin-Experiment-
-This repository contains the code used for the EEG experiments done in collaboration between the Brainlab (UB) and the MTG (UPF). 
+This repository contains the code used for the EEG experiments that are being carried out in closevcollaboration between the Brainlab (UB) and the MTG (UPF). 
 
 In Score we have all the code used for the generation of the scores that we show to the participants. 
 The output of "generate_scores.m" is saved in the folder called "New_generated_scores" in musicxml format. We used MuseScore to

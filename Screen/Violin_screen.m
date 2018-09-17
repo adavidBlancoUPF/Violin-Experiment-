@@ -153,12 +153,13 @@ for iTrial=1:nTrials
     Screen('DrawTexture',EXPWIN,t_handle);
     DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
     DrawFormattedText(EXPWIN, num2str(1), 'center', countdownNumberText,redcolor); % draw the question centered
+    ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     
     Screen('Flip', EXPWIN);
     WaitSecs(1);
     
     Screen('DrawTexture',EXPWIN,t_handle);
-    ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
+    
     DrawFormattedText(EXPWIN, Instruction4, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);

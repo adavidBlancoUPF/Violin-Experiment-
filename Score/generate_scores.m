@@ -11,7 +11,7 @@ locrio = [1,3,5,6];
 
 semitones = {'G','A','A','B','C','C','D'};
 
-counter = 1;
+counter = 0;
 %permutaciones en jonico
 perms_array = perms(jonico);
 name = 'jonico';

@@ -7,6 +7,8 @@ In Score we have all the code used for the generation of the scores that we show
 The output of "generate_scores.m" is saved in the folder called "New_generated_scores" in musicxml format. We used MuseScore to
 convert the xml files to images in png. 
 
+In Max_code we have the software developed in Max to process the sound in real-time during the experiment (pitch shifting).  
+
 In Violin_Sample_sounds we have all the code used for the generation of the melodies that participants hear as reference in our
 experiment. The reference sound used to create the melodies was a G3 with a length of 0.25seg, played Mezzo-Forte with arco normal 
 acquired from here: 

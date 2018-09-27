@@ -9,7 +9,7 @@ for i=1:length(perms_array)
 %     signal((fs*3+1):(fs*3+length(Ynotes(perms_array(i,3),:)))) = Ynotes(perms_array(i,3),:);
 %     signal((fs*4+1):(fs*4+length(Ynotes(perms_array(i,4),:)))) = Ynotes(perms_array(i,4),:);
     end
-    audiowrite([folder_name,'\',num2str(counter,'%03.f'),'_',num2str(i),'_',name,'.wav'],signal, fs);
+    audiowrite([folder_name,'\',num2str(counter,'%03.f'),'_',num2str(i,'%02.f'),'_',name,'.wav'],signal, fs);
     counter = counter + 1;
 end
 

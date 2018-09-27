@@ -13,7 +13,7 @@ folder_name = 'New_generated_melodies';
 %6:Do#
 %7:Re
 for i=1:7
-    [x,fs] = audioread([num2str(i),'.wav']);
+    [x,fs] = audioread(['Original_Sounds\', num2str(i),'.wav']);
     Ynotes(i,:) = x(1:37000);  %Número aproximado de duración para cada audio. 
 end
 

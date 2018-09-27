@@ -15,7 +15,7 @@ textfont = 'Arial';
 countdownfontsize = 50;
 
 screens = Screen('Screens');
-screenNumber = 2;
+screenNumber = 0;
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
 
@@ -42,7 +42,7 @@ paHandle = PsychPortAudio('Open'); % Open the Audio port and get a handle to ref
 buffer(1) = PsychPortAudio('Createbuffer',paHandle,click);
 PsychPortAudio('FillBuffer', paHandle,buffer(1)); % Fill the audio buffer with click
 
-if screenNumber == 1
+if screenNumber == 1 || screenNumber == 0
     %%% Drawing arrow and text settings in 16:9 screens
     init_x_arr = 230;
     first_x_arr = 340;

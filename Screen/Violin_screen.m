@@ -15,7 +15,7 @@ textfont = 'Arial';
 countdownfontsize = 50;
 
 screens = Screen('Screens');
-screenNumber = 0;
+screenNumber = 1;
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
 
@@ -70,7 +70,7 @@ nTrials = 2;%8
 nNotes  = 8;
 nCountdown = 5;
 Playdur = 25; % Time in seconds we give them to play each scale 25s
-ClickSOA = 1; % Time in seconds between clicks
+ClickSOA = 0; % Time in seconds between clicks
 Instruction1 = 'Please, play the following melodies with staccato \n\n use the countdown as a reference for the tempo \n\n\n\n\n\n Press any key to start';
 Instruction2 = 'Listen';
 Instruction3 = 'Ready!';
@@ -78,6 +78,8 @@ Instruction4 = 'GO!';
 Instruction5 = 'End of Trial';
 Instruction6 = 'Stop!';
 Instruction7 = 'Get ready to play in:';
+Instruction8 = 'End of Block: Press space to continue';
+Mode = {['Jonico'], ['Eolico'], ['Frigio'], ['Lidio'],['Locrio']};
 
 %%% arrow points
 val_arrow = linspace(first_x_arr,last_x_arr, nNotes);
@@ -105,10 +107,26 @@ tStart = GetSecs;
 ClickTime = GetSecs;
 
 List = dir(fullfile(folder_path,'*.jpg'));
-Csv_list = csvread('file_example.csv');
+Csv_list = csvread('random_file.csv');
+nTrials = length(Csv_list);
 %list_index = newListOrder(List,Csv_list);
-
+counter_trials = 0;
+n_mode = 1;
 for iTrial=1:nTrials
+    counter_trials = counter_trials + 1;
+    if counter_trials == 5
+        counter_trials = 1;
+        if n_mode == 5
+            n_mode = 1;
+        else
+            n_mode = n_mode + 1;
+        end
+        DrawFormattedText(EXPWIN, Instruction8, 'center', countdownNumberText,textcolor); % draw the question centered
+        Screen('Flip', EXPWIN);
+        KbPressWait;
+    end
+        
+        
     %Send Click
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     
@@ -118,7 +136,7 @@ for iTrial=1:nTrials
     pict = imresize(pict,0.5);
     t_handle = Screen('MakeTexture',EXPWIN,pict);
     %Screen('DrawTexture',EXPWIN,t_handle);
-    instructions = 'Listen to the scale';
+    instructions = ['Listen to the scale. Mode: ', Mode{n_mode}];
     textfontsize = 50;
     Screen('TextSize', EXPWIN, textfontsize);
     %DrawFormattedText(EXPWIN, instructions, 'center', 700,textcolor); % draw the question centered
@@ -148,12 +166,13 @@ for iTrial=1:nTrials
     
     tStart = GetSecs;
     ClickTime = GetSecs;
+    ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     
     %ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     Screen('DrawTexture',EXPWIN,t_handle);
     DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
     DrawFormattedText(EXPWIN, num2str(1), 'center', countdownNumberText,redcolor); % draw the question centered
-    ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
+    
     
     Screen('Flip', EXPWIN);
     WaitSecs(1);
@@ -163,21 +182,21 @@ for iTrial=1:nTrials
     DrawFormattedText(EXPWIN, Instruction4, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
-    WaitSecs(nNotes);
+    WaitSecs(nNotes+1);
     
-    Screen('DrawTexture',EXPWIN,t_handle);
-    ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
-    DrawFormattedText(EXPWIN, Instruction6, 'center', countdownNumberText,textcolor); % draw the question centered
+    %Screen('DrawTexture',EXPWIN,t_handle);
+    %ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
+    %DrawFormattedText(EXPWIN, Instruction6, 'center', countdownNumberText,textcolor); % draw the question centered
     
-    Screen('Flip', EXPWIN);
-    WaitSecs(1);
+    %Screen('Flip', EXPWIN);
+    %WaitSecs(1);
       
     Screen('DrawTexture',EXPWIN,t_handle);
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     DrawFormattedText(EXPWIN, Instruction2, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
-    WaitSecs(nNotes);
+    WaitSecs(nNotes+1);
     
     
 end

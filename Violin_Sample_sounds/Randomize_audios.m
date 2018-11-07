@@ -62,10 +62,15 @@ end
 
 
 v = [1:120]';
-
-rand_note = 2*randi(4,1,120)';
+pitch_dir = round(rand(120,1));
+rand_note = randi(3,1,120)'+1;
 final_mat = final_mat';
 final_mat = final_mat(:);
-v = [v final_mat rand_note];
+v = [v final_mat rand_note pitch_dir];
 
-csvwrite('random_file8.csv',v)
+csvwrite('random_file1.csv',v)
+
+fid = fopen('random_file1.txt', 'wt');
+for i = 1:length(v)
+    fprintf(fid, '%d, %d, %d, %d;\n', v(i,1), v(i,2), v(i,3), v(i,4));
+end

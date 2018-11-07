@@ -6,19 +6,19 @@ measure = score_ref.score_dash_partwise.part.measure;
 
 for i=1:length(perms_array)
     for j=1:size(perms_array,2)
-        if j<5 
+        if j==1 
             compas = 2;
-            negra = j;
+            negra = j+1;
         else
             compas = 3;
-            negra = j - 4;
+            negra = j - 1;
         end
         %measure{compas}.note{negra}.pitch.step.Text = semitones{perms_array(i,j)};
         note = struct;
         note.pitch.step.Text = semitones{perms_array(i,j)};
-        note.duration.Text = '1';
+        note.duration.Text = '2';
         note.voice.Text = '1';
-        note.type.Text = 'quarter';
+        note.type.Text = 'half';
         if (perms_array(i,j) == 1) ||  (perms_array(i,j) == 3) || (perms_array(i,j) == 6)
             note.pitch.alter.Text = '1';
             note.accidental.Text = 'sharp';

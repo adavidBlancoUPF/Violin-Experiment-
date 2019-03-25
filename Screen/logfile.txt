@@ -1,0 +1,26 @@
+[25/3/2019 T: 17:21:2.422200e+01] Experiment Starts: 
+[25/3/2019 T: 17:21:26.55] Porttalk and audio click: 
+[25/3/2019 T: 17:21:26.55] Listen to the scale. Mode: Jonico: 
+[25/3/2019 T: 17:21:34.13] Porttalk and audio click: 
+[25/3/2019 T: 17:21:34.63] GO!: 
+[25/3/2019 T: 17:21:42.71] Porttalk and audio click: 
+[25/3/2019 T: 17:21:43.71] Listen: 
+[25/3/2019 T: 17:21:51.84] Porttalk and audio click: 
+[25/3/2019 T: 17:21:51.84] Listen to the scale. Mode: Jonico: 
+[25/3/2019 T: 17:21:59.44] Porttalk and audio click: 
+[25/3/2019 T: 17:21:59.95] GO!: 
+[25/3/2019 T: 17:22:8.03] Porttalk and audio click: 
+[25/3/2019 T: 17:22:9.03] Listen: 
+[25/3/2019 T: 17:22:17.20] Porttalk and audio click: 
+[25/3/2019 T: 17:22:17.20] Listen to the scale. Mode: Jonico: 
+[25/3/2019 T: 17:22:24.84] Porttalk and audio click: 
+[25/3/2019 T: 17:22:25.35] GO!: 
+[25/3/2019 T: 17:22:33.42] Porttalk and audio click: 
+[25/3/2019 T: 17:22:34.42] Listen: 
+[25/3/2019 T: 17:22:42.56] Porttalk and audio click: 
+[25/3/2019 T: 17:22:42.56] Listen to the scale. Mode: Jonico: 
+[25/3/2019 T: 17:22:50.15] Porttalk and audio click: 
+[25/3/2019 T: 17:22:50.65] GO!: 
+[25/3/2019 T: 17:22:58.72] Porttalk and audio click: 
+[25/3/2019 T: 17:22:59.73] Listen: 
+[25/3/2019 T: 17:23:7.80] End of Block: Press space to continue: 

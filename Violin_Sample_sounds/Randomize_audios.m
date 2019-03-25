@@ -68,9 +68,9 @@ final_mat = final_mat';
 final_mat = final_mat(:);
 v = [v final_mat rand_note pitch_dir];
 
-csvwrite('random_file1.csv',v)
+csvwrite('random_file2.csv',v)
 
-fid = fopen('random_file1.txt', 'wt');
+fid = fopen('random_file2.txt', 'wt');
 for i = 1:length(v)
     fprintf(fid, '%d, %d, %d, %d;\n', v(i,1), v(i,2), v(i,3), v(i,4));
 end

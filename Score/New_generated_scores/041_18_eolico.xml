@@ -103,14 +103,14 @@
          </note>
          <note>
             <pitch>
-               <step>A</step>
-               <alter>1</alter>
+               <step>B</step>
+               <alter>-1</alter>
                <octave>3</octave>
             </pitch>
             <duration>2</duration>
             <voice>1</voice>
             <type>half</type>
-            <accidental>sharp</accidental>
+            <accidental>flat</accidental>
             <stem>up</stem>
          </note>
       </measure>

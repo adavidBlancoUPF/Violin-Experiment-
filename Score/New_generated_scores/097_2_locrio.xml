@@ -103,14 +103,14 @@
          </note>
          <note>
             <pitch>
-               <step>C</step>
-               <alter>1</alter>
+               <step>D</step>
+               <alter>-1</alter>
                <octave>4</octave>
             </pitch>
             <duration>2</duration>
             <voice>1</voice>
             <type>half</type>
-            <accidental>sharp</accidental>
+            <accidental>flat</accidental>
             <stem>up</stem>
          </note>
       </measure>
@@ -127,14 +127,14 @@
          </note>
          <note>
             <pitch>
-               <step>G</step>
-               <alter>1</alter>
+               <step>A</step>
+               <alter>-1</alter>
                <octave>3</octave>
             </pitch>
             <duration>2</duration>
             <voice>1</voice>
             <type>half</type>
-            <accidental>sharp</accidental>
+            <accidental>flat</accidental>
             <stem>up</stem>
          </note>
          <barline location="right">

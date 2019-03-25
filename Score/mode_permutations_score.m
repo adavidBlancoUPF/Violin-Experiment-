@@ -20,8 +20,8 @@ for i=1:length(perms_array)
         note.voice.Text = '1';
         note.type.Text = 'half';
         if (perms_array(i,j) == 1) ||  (perms_array(i,j) == 3) || (perms_array(i,j) == 6)
-            note.pitch.alter.Text = '1';
-            note.accidental.Text = 'sharp';
+            note.pitch.alter.Text = '-1';
+            note.accidental.Text = 'flat';
         end
         if perms_array(i,j) < 5 
             note.pitch.octave.Text = '3';
@@ -40,4 +40,3 @@ end
 
 
 end
-

@@ -15,7 +15,7 @@ textfont = 'Arial';
 countdownfontsize = 50;
 
 screens = Screen('Screens');
-screenNumber = 1;
+screenNumber = 0;
 white = WhiteIndex(screenNumber);
 black = BlackIndex(screenNumber);
 
@@ -45,8 +45,8 @@ PsychPortAudio('FillBuffer', paHandle,buffer(1)); % Fill the audio buffer with c
 if screenNumber == 1 || screenNumber == 0
     %%% Drawing arrow and text settings in 16:9 screens
     init_x_arr = 230;
-    first_x_arr = 340;
-    last_x_arr = 1120;
+    first_x_arr = 400;
+    last_x_arr = 1000;
     y_arr     = 300;
     instructions_text = 700;
     countdownText = 550;
@@ -66,9 +66,9 @@ end
 
 
 %%%%% Block settings %%%%%
-nTrials = 2;%8
-nNotes  = 8;
-nCountdown = 5;
+nTrials = 1;%8
+nNotes  = 4;
+nCountdown = 1;
 Playdur = 25; % Time in seconds we give them to play each scale 25s
 ClickSOA = 0; % Time in seconds between clicks
 Instruction1 = 'Please, play the following melodies with staccato \n\n use the countdown as a reference for the tempo \n\n\n\n\n\n Press any key to start';
@@ -83,7 +83,7 @@ Mode = {['Jonico'], ['Eolico'], ['Frigio'], ['Lidio'],['Locrio']};
 
 %%% arrow points
 val_arrow = linspace(first_x_arr,last_x_arr, nNotes);
-val_arrow = [init_x_arr,val_arrow];
+%val_arrow = [init_x_arr,val_arrow];
 
 
 %% Experiment Start
@@ -108,7 +108,7 @@ ClickTime = GetSecs;
 
 List = dir(fullfile(folder_path,'*.jpg'));
 Csv_list = csvread('random_file.csv');
-nTrials = length(Csv_list);
+%nTrials = length(Csv_list);
 %list_index = newListOrder(List,Csv_list);
 counter_trials = 0;
 n_mode = 1;
@@ -121,7 +121,7 @@ for iTrial=1:nTrials
         else
             n_mode = n_mode + 1;
         end
-        DrawFormattedText(EXPWIN, Instruction8, 'center', countdownNumberText,textcolor); % draw the question centered
+        DrawFormattedText(EXPWIN, Instruction8, 'center', instructions_text,textcolor); % draw the question centered
         Screen('Flip', EXPWIN);
         KbPressWait;
     end
@@ -157,32 +157,38 @@ for iTrial=1:nTrials
         DrawFormattedText(EXPWIN, instructions, 'center', instructions_text,textcolor); % draw the question centered
         if sec > nCountdown
             DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
-            DrawFormattedText(EXPWIN, num2str((nNotes+3)-sec), 'center', countdownNumberText,redcolor);
+            DrawFormattedText(EXPWIN, num2str((nNotes)-sec + 1), 'center', countdownNumberText,redcolor);
         end
-        Screen('Flip', EXPWIN);
-        WaitSecs(1);
+        if sec ~= length(val_arrow)
+            Screen('Flip', EXPWIN);
+            WaitSecs(2);
+        end
     end
     
+    
+    Screen('DrawTexture',EXPWIN,t_handle);
+    DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
+    DrawFormattedText(EXPWIN, num2str(1), 'center', countdownNumberText,redcolor); % draw the question centered
+    Screen('Flip', EXPWIN);
+    
+    WaitSecs(1);
     
     tStart = GetSecs;
     ClickTime = GetSecs;
     ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
     
     %ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
-    Screen('DrawTexture',EXPWIN,t_handle);
-    DrawFormattedText(EXPWIN, Instruction7, 'center', countdownText,textcolor);
-    DrawFormattedText(EXPWIN, num2str(1), 'center', countdownNumberText,redcolor); % draw the question centered
-    
-    
-    Screen('Flip', EXPWIN);
     WaitSecs(1);
+    
+    
+    %
     
     Screen('DrawTexture',EXPWIN,t_handle);
     
     DrawFormattedText(EXPWIN, Instruction4, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
-    WaitSecs(nNotes+1);
+    WaitSecs(nNotes*2+1);
     
     %Screen('DrawTexture',EXPWIN,t_handle);
     %ClickTime = PsychPortAudio('Start', paHandle,1,ClickTime+ClickSOA,1); % Play sound immediately
@@ -196,7 +202,7 @@ for iTrial=1:nTrials
     DrawFormattedText(EXPWIN, Instruction2, 'center', countdownNumberText,textcolor); % draw the question centered
     
     Screen('Flip', EXPWIN);
-    WaitSecs(nNotes+1);
+    WaitSecs(nNotes*2+1);
     
     
 end
